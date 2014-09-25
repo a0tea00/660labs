@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+<bean id="account" class="bank.Account" scope="prototype" >
+	<constructor-arg name="pin"><null /></constructor-arg>
+	<property name="amount" value = "0.0" />
+</bean>
+<bean id="a001" class="bank.Account">
+	<constructor-arg name="pin" value="001" />
+	<property name="amount" value = "1000.00" />	
+</bean>
+<bean id="a002" class="bank.Account">
+	<constructor-arg name="pin" value="001" />
+	<property name="amount" value = "1000.00" />	
+</bean>
+
+<bean id="transaction" class = "bank.Transaction" scope="prototype"  >
+	<constructor-arg name="account">
+		<null />
+	</constructor-arg>
+
+	<property name="type"><null /></property>
+	<property name="completed" value="false" />
+</bean>
+
+<bean id="accountManager" class="bank.AccountManager" scope="singleton">
+	<property name="accountPool">
+		<map>
+			<entry key="001" value-ref="a001" />
+			<entry key="002" value-ref="a002" />
+		</map>
+	</property>
+</bean>
+
+<bean id="transManager" class="bank.TransManager" scope="singleton">
+</bean>
+
+</beans>
