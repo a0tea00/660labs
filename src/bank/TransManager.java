@@ -1,57 +1,64 @@
 package bank;
 
-import java.util.ArrayList;;
+
+import org.springframework.beans.factory.annotation.*;
 
 
 public class TransManager {
-	private ArrayList<Transaction> transPool;
-
+	
+	private Deposit tranDeposit;
+	private Withdrawal tranWithdrawal;
+	private Transfer tranTransfer;
+	
 	
 	public TransManager(){
 		
 	}
-
-	
-	
-	public Transaction startTransaction(Transaction t){
-		transPool.add(t); 
-		return t;
+	@Required
+	public void setTranDeposit(Deposit tranDeposit) {
+		this.tranDeposit = tranDeposit;
 	}
-	
-	public void deposit(Transaction t, double amount ){
-		final String type = "DEPOSIT";		
-		
-		t.setType(type);
-		t.setFinalAmount((t.getIniAmount() + amount));
-		t.complete();
-		System.out.println(t);
+	@Required
+	public void setTranWithdrawal(Withdrawal tranWithdrawal) {
+		this.tranWithdrawal = tranWithdrawal;
+	}
+	@Required
+	public void setTranTransfer(Transfer tranTransfer) {
+		this.tranTransfer = tranTransfer;
 	}
 
-	public void withdrawal(Transaction t, double amount){
-		final String type = "WITHDRAW";
-		t.setType(type);
-		t.setFinalAmount((t.getIniAmount() - amount));
-		t.complete();	
-		System.out.println(t);
+	public void deposit( Account account, double amount) throws TransactionException{
+		try{
+			tranDeposit.start(account);
+			tranDeposit.complete(amount);
+			
+		}
+		catch(TransactionException e){
+			throw e;
+		}
 	}
 	
-	//for Part B
-	public void transfer(Transaction t1, Transaction t2, double amount){
-		final String type1 = "TRAN SEND";
-		final String type2 = "TRAN RECEIVED";
-		
-		t1.setType(type1);
-		t2.setType(type2);
-
-		
-		t1.setFinalAmount((t1.getIniAmount() - amount));
-		t2.setFinalAmount((t2.getIniAmount() + amount));
-		
-		t1.complete();
-		t2.complete();
-		
-		System.out.println(t1);
-		System.out.println(t2);
-		
+	public void withdrawal( Account account, double amount) throws TransactionException{	
+		try{
+			tranWithdrawal.start(account);
+			tranWithdrawal.complete(amount);
+			
+		}
+		catch(TransactionException e){
+			throw e;
+		}
 	}
+	
+	public void transfer( Account accountFrom, Account accountTo, double amount) throws TransactionException{
+		try{
+			tranTransfer.start(accountFrom, accountTo);
+			tranTransfer.complete(amount);
+			
+		}
+		catch(TransactionException e){
+			throw e;
+		}
+	}
+
+	
 }

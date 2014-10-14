@@ -10,8 +10,7 @@ public class app_c {
 
 	public static void main(String[] args){
 		ApplicationContext context = new ClassPathXmlApplicationContext("config.xml");
-		
-		UI = 
+	
 		
 	}
 

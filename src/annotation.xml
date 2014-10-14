@@ -9,13 +9,4 @@
 
    <context:annotation-config/>
 
-	<bean id="a001" class="bank.Account">
-	<constructor-arg name="pin" value="001" />
-	<property name="amount" value = "1000.00" />	
-	</bean>
-	<bean id="a002" class="bank.Account">
-	<constructor-arg name="pin" value="001" />
-	<property name="amount" value = "1000.00" />	
-	</bean>
-
 </beans>
